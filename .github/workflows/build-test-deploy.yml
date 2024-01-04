@@ -1,0 +1,38 @@
+on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+    secrets:
+      envPAT:
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-lastest
+
+    steps:
+      - name: check out repo
+        uses: actions/checkout@v4.1.1
+      - name: use node.js
+        uses: actions/setup-node@v4.0.1
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - run: npm install
+      - run: npm run build
+      
+  test:
+    runs-on: ubuntu-lastest
+
+    steps:
+      - name: check out repo
+        uses: actions/checkout@v4.1.1
+      - name: use node.js
+        uses: actions/setup-node@v4.0.1
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - run: npm install
+      - run: npm test
+      
